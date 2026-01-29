@@ -1,58 +1,36 @@
 using System;
-using System.Diagnostics; // Required to run external scripts
+using System.Diagnostics;
 
 /**
- * PROJECT: NOWK OS INSTALLER
- * MODULE: CORE_INTEGRATOR
- * LANGUAGE: C#
+ * NOWK OS - REAL DEPLOYMENT ENGINE
+ * WARNING: THIS MODULE PERFORMS DISK OPERATIONS
  */
 
-namespace NowkOS
-{
-    class Integrator
-    {
-        static void Main(string[] args)
-        {
-            Console.WriteLine(" +---------------------------------------------------------+ ");
-            Console.WriteLine(" | NOWK OS - CENTRAL INTEGRATOR                            | ");
-            Console.WriteLine(" +---------------------------------------------------------+ ");
-
-            // 1. CALLING HARDWARE CHECK (C++)
-            RunModule("CheckHardware.exe", "Scanning Hardware...");
-
-            // 2. CALLING DATA MIGRATION (PYTHON)
-            RunModule("python DataMigration.py", "Migrating User Data...");
-
-            // 3. DETECTING OS AND RUNNING POST-INSTALL
-            // This is where the BASH logic enters
-            if (IsLinux()) {
-                RunModule("bash linux_setup.sh", "Executing Linux Setup...");
-            } else {
-                RunModule("powershell.exe -File win_setup.ps1", "Executing Windows Setup...");
-            }
-
-            Console.WriteLine(" |                                                         | ");
-            Console.WriteLine(" |  ALL MODULES EXECUTED SUCCESSFULLY                      | ");
-            Console.WriteLine(" +---------------------------------------------------------+ ");
+namespace NowkOS {
+    class Deployment {
+        public static void InstallWindows(string partitionLetter, string isoPath) {
+            // DISM é a ferramenta oficial da Microsoft para instalar o Windows de verdade
+            // Este comando aplica a imagem do sistema no HD escolhido
+            string command = $"/Apply-Image /ImageFile:{isoPath} /Index:1 /ApplyDir:{partitionLetter}:\\";
+            
+            Console.WriteLine($" | [!] DEPLOYING WINDOWS TO {partitionLetter}:... ");
+            ExecuteProcess("dism.exe", command);
         }
 
-        static void RunModule(string command, string description)
-        {
-            Console.WriteLine(" | > " + description);
-            try {
-                ProcessStartInfo psi = new ProcessStartInfo("cmd.exe", "/c " + command);
-                psi.WindowStyle = ProcessWindowStyle.Hidden;
-                Process p = Process.Start(psi);
-                p.WaitForExit();
-                Console.WriteLine(" |   STATUS: [ DONE ]                                      | ");
-            } catch {
-                Console.WriteLine(" |   STATUS: [ ERROR ]                                     | ");
-            }
+        public static void InstallLinux(string diskPath, string imagePath) {
+            // No Linux, usamos o comando 'dd' para escrever a imagem bit a bit
+            string command = $"if={imagePath} of={diskPath} bs=4M status=progress";
+            
+            Console.WriteLine($" | [!] DEPLOYING LINUX TO {diskPath}... ");
+            ExecuteProcess("dd", command);
         }
 
-        static bool IsLinux() {
-            // Logic to detect if the installer is running on Linux environment
-            return Environment.OSVersion.Platform == PlatformID.Unix;
+        private static void ExecuteProcess(string fileName, string args) {
+            ProcessStartInfo psi = new ProcessStartInfo(fileName, args);
+            psi.UseShellExecute = false;
+            psi.CreateNoWindow = false; // Mostra a janela para você ver o progresso real
+            Process p = Process.Start(psi);
+            p.WaitForExit();
         }
     }
 }
