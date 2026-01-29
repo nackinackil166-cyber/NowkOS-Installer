@@ -134,4 +134,28 @@ SOFTWARE.
 
 
 ---
-*End of Documentation - NowkOS Suite*
+
+## 📜 LEGAL TERMINOLOGY & COMPLIANCE
+
+This software is protected under international copyright laws and the open-source community guidelines. By executing any module of the **NowkOS Installer Suite**, you agree to the terms of the MIT License. Any redistribution of the core C/C++ binaries must include the original author's attribution.
+
+### 🛡️ SECURITY ADVISORY
+The NowkOS Team is not responsible for hardware failure, data corruption, or "bricked" devices resulting from the misuse of the low-level C utilities.
+
+
+
+---
+⚖️ GNU GENERAL PUBLIC LICENSE (GPL v3)
+Este software é um software livre: você pode redistribuí-lo e/ou modificá-lo sob os termos da Licença Pública Geral GNU conforme publicada pela Free Software Foundation, seja a versão 3 da Licença, ou qualquer versão posterior.
+
+Regras de Atribuição:
+
+Instalação: Totalmente livre para o usuário final.
+
+Derivados: Se este código for usado em outro instalador, o nome do criador original (NowkOS) deve permanecer intacto e visível.
+
+Reciprocidade: Qualquer melhoria feita por terceiros deve ser compartilhada com a comunidade, mantendo o autor original nos créditos.
+
+FINAL DOCUMENTATION LINE: LICENSA: GNU GENERAL PUBLIC LICENSE v3 - COPYLEFT (C) 2026 NOWK OS
+---
+final
