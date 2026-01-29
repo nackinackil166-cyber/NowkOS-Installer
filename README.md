@@ -25,7 +25,7 @@ This software is provided "as is". The deployment process involves low-level dis
 ---
 
 ## 🛠️ Technical Architecture
-
+NowkOS-Installer/
 ### 1. The C# Integration Layer (The Brain)
 The C# module acts as the Global Orchestrator. It handles:
 - The Graphical User Interface (GUI) state machine.
@@ -53,16 +53,12 @@ Python manages the abstract logic:
 
 ---
 
-## 📂 Project Structure Map
+### 📂 Project Structure
 
-
-
-- `/src/core/Selector.cs` -> UI Logic
-- `/src/kernel/DiskWriter.c` -> Low-level I/O
-- `/src/opt/HardwareScan.cpp` -> Performance
-- `/scripts/migration.py` -> User Data
-- `/scripts/post_install.sh` -> Linux Optimization
-- `/scripts/cleaner.ps1` -> Windows Debloat
+* **build/**: Compiled binaries and ready-to-run executables.
+* **core/**: The heart of NowkOS (C#, C++, and C source files).
+* **interface/**: UI elements and graphical modules.
+* **modules/**: Python automation, data migration, and helper scripts.
 
 ## 🚀 Deployment Pipeline (Logic Flow)
 
